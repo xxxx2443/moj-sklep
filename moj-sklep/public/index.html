@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mój Sklep</title>
+<script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+  <h1>Witaj w sklepie!</h1>
+  <button id="checkout-button">Kup plik</button>
+
+<script>
+const stripe = Stripe('TWÓJ_PUBLICZNY_KLUCZ_STRIPE');
+
+document.getElementById('checkout-button').onclick = () => {
+  fetch('/.netlify/functions/create-checkout')
+    .then(res => res.json())
+    .then(data => stripe.redirectToCheckout({ sessionId: data.id }));
+};
+</script>
+</body>
+</html>
